@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Archives | InfoMag</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-content">
+        <div class="logo">
+            <h1>InfoMag</h1>
+            <p>Le magazine de l'information fiable</p>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="actualites.html">Actualités</a></li>
+                <li><a href="categories.html">Catégories</a></li>
+                <li><a href="archives.html" class="active">Archives</a></li>
+                <li><a href="apropos.html">À propos</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<main class="main">
+    <div class="container">
+        <h2 class="section-title">Archives des articles</h2>
+
+        <!-- Zone de recherche -->
+       <section class="search-section">
+    <div class="container">
+        <input
+            type="text"
+            id="searchInput"
+            placeholder="Rechercher un article par mot-clé..."
+        >
+       <p id="noResult" style="display:none;color:red;">Aucun article trouvé.</p>
+    </div>
+</section>
+
+        <!-- Liste des articles -->
+         
+        <section class="articles" id="archivesContainer"></section>
+    </div>
+</main>
+
+<footer class="footer">
+    <div class="container footer-content">
+        <div class="footer-about">
+            <h3>InfoMag</h3>
+            <p>
+                InfoMag est un magazine numérique indépendant
+                dédié à une information fiable, responsable
+                et accessible à tous.
+            </p>
+        </div>
+        <div class="footer-contact">
+            <h4>Contact</h4>
+             <p>Email :
+                <a href="mailto:kabeyajw@gmail.com">kabeyajw@gmail.com</a>
+            </p>
+            <p>WhatsApp :
+                <a href="https://wa.me/243857383511" target="_blank">+243 857 383 511</a>
+            </p>
+        </div>
+        <div class="footer-social">
+            <h4>Suivez-nous</h4>
+            <div class="social-icons">
+                <a href="https://facebook.com" target="_blank">Facebook</a>
+                <a href="https://instagram.com" target="_blank">Instagram</a>
+                <a href="https://twitter.com" target="_blank">X</a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2026 InfoMag – Tous droits réservés.</p>
+    </div>
+</footer>
+
+<script>
+// Sélection des éléments
+var container = document.getElementById('archivesContainer');
+var searchInput = document.getElementById('searchInput');
+var noResult = document.getElementById('noResult');
+
+// Tous les articles (même format que actualites)
+var allArticles = [
+    { titre: "L’intelligence artificielle en Afrique", date: "2026-01-06", categorie: "technologie", image: "tech.jpeg", lien: "article1.html" },
+    { titre: "La jeunesse et le numérique", date: "2026-01-05", categorie: "technologie",image: "tech.jpeg", lien: "article2.html" },
+    { titre: "Éducation : quels défis aujourd’hui ?", date: "2026-01-04", categorie: "éducation",image: "education.jpeg", lien: "article3.html" },
+    { titre: "Santé publique et innovation", date: "2026-01-03", categorie: "santé",image: "sante.jpeg", lien: "article4.html" },
+    { titre: "Culture africaine à l’ère du digital", date: "2026-01-02", categorie: "culture",image: "culture.jpeg", lien: "article5.html" }
+];
+
+// Fonction pour afficher les articles
+function displayArticles(articles){
+    container.innerHTML = '';
+    if(articles.length === 0){
+        noResult.style.display = 'block';
+        return;
+    } else {
+        noResult.style.display = 'none';
+    }
+
+    // Tri par date décroissante
+    articles.sort(function(a,b){
+        return new Date(b.date) - new Date(a.date);
+    });
+
+    articles.forEach(function(article){
+    container.innerHTML += `
+        <article class="card">
+            <img src="${article.image}" alt="${article.titre}">
+            <div class="card-content">
+                <h3>${article.titre}</h3>
+                <p><strong>Date :</strong> ${article.date} • <strong>Catégorie :</strong> ${article.categorie}</p>
+                <a href="${article.lien}" class="btn">Lire la suite</a>
+            </div>
+        </article>
+    `;
+});
+}
+
+// Recherche par mot-clé
+searchInput.addEventListener('keyup', function(){
+    var value = searchInput.value.toLowerCase();
+    var filtered = allArticles.filter(function(a){
+        return a.titre.toLowerCase().includes(value);
+    });
+    displayArticles(filtered);
+});
+
+// Affichage initial
+window.addEventListener('load', function(){
+    displayArticles(allArticles);
+});
+</script>
+
+</body>
+</html>
